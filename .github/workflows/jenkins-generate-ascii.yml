@@ -1,7 +1,9 @@
 name: Generate ASCII Artwork
-
 on: 
   workflow_dispatch:
+  push:
+    branches:
+      - 'feature-testing' 
 jobs:
   build-artwork:
     runs-on: ubuntu-latest
@@ -11,7 +13,7 @@ jobs:
              curl -s https://api.adviceslip.com/advice > advice.json
              cat advice.json
              cat advice.json | jq -r .slip.advice > advice.message
-              [ $(wc -w < advice.message) -gt 5 ] && echo "Advice has more than 5 words" || (echo "Advice - $(cat advice.message)  has 5 words or less" && exit 1)
+              [ $(wc -w < advice.message) -gt 10 ] && echo "Advice has more than 10 words" || (echo "Advice - $(cat advice.message)  has 10 words or less" && exit 1)
               sudo apt-get install cowsay -y
               echo $PATH
               export PATH="$PATH:/usr/games:/usr/local/games"
